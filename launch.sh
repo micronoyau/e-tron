@@ -1,8 +1,17 @@
+OPENCODE_SHARE_DIR=$(pwd)/.opencode-cache
+OPENCODE_CREDS=$HOME/.local/share/opencode/auth.json
+
+if [ ! -d $OPENCODE_SHARE_DIR ]; then
+  echo "Creating opencode share dir in $OPENCODE_SHARE_DIR ..."
+  mkdir -p $OPENCODE_SHARE_DIR
+  cp $OPENCODE_CREDS $OPENCODE_SHARE_DIR
+fi
+
 docker run \
   --rm \
   -it \
   --mount type=bind,source="$(pwd)",target="/home/user/chal" \
-  --mount type=bind,source="${HOME}/.local/share/opencode/auth.json",target="/home/user/.local/share/opencode/auth.json" \
+  --mount type=bind,source="$OPENCODE_SHARE_DIR",target="/home/user/.local/share/opencode/" \
   --mount type=bind,source="${HOME}/Downloads",target="/root/Downloads" \
   --mount type=bind,source="${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}",target="/tmp/${WAYLAND_DISPLAY}" \
   -e XDG_RUNTIME_DIR=/tmp \
