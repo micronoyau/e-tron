@@ -76,7 +76,7 @@ RUN cd /tmp \
     && sudo mv radare2 /opt \
     && cd /opt/radare2 \
     && ./sys/install.sh
-RUN r2pm -U && r2pm -ci r2ghidra r2mcp
+RUN r2pm -U && r2pm -ci r2ghidra
 # RUN r2pm -U && r2pm -ci r2ghidra r2mcp iaito
 
 # # Ghidra
@@ -103,13 +103,16 @@ ENV PATH="/home/user/.opencode/bin:${PATH}"
 ADD opencode.json /home/user/.config/opencode/opencode.json
 RUN mkdir -p ~/.local/share/opencode
 
-# Some MCPs
+# GDB MCP
 RUN cd /tmp \
     && git clone https://github.com/signal-slot/mcp-gdb.git \
     && sudo mv /tmp/mcp-gdb /opt \
     && cd /opt/mcp-gdb \
     && npm install \
     && npm run build
+
+# Radare2 MCP
+RUN r2pm -ci r2mcp
 
 RUN mkdir /home/user/chal
 WORKDIR /home/user/chal

@@ -1,4 +1,5 @@
-OPENCODE_SHARE_DIR=$(pwd)/.opencode-cache
+PROJECT_UID=$(pwd -P | sha256sum | awk '{print $1}')
+OPENCODE_SHARE_DIR=$HOME/.local/share/exploitron/$PROJECT_UID
 OPENCODE_CREDS=$HOME/.local/share/opencode/auth.json
 
 if [ ! -d $OPENCODE_SHARE_DIR ]; then
