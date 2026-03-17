@@ -77,7 +77,7 @@ RUN cd /tmp \
     && cd /opt/radare2 \
     && ./sys/install.sh
 RUN r2pm -U && r2pm -ci r2ghidra
-# RUN r2pm -U && r2pm -ci r2ghidra r2mcp iaito
+# RUN r2pm -U && r2pm -ci r2ghidra iaito
 
 # # Ghidra
 # ARG GHIDRA_URL=https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.0.4_build/ghidra_12.0.4_PUBLIC_20260303.zip
@@ -88,7 +88,7 @@ RUN r2pm -U && r2pm -ci r2ghidra
 #     && sudo mv /tmp/ghidra/ghidra/ghidra_* /opt/ghidra
 
 # Gdb
-RUN bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
+RUN curl --proto '=https' --tlsv1.2 -LsSf 'https://install.pwndbg.re' | sh -s -- -t pwndbg-gdb
 RUN cd /tmp \
     && git clone https://github.com/martinradev/gdb-pt-dump.git \
     && sudo mv gdb-pt-dump /opt \
