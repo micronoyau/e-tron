@@ -12,6 +12,8 @@ RUN apt-get update \
         gdb \
         gdb-multiarch \
         git \
+        iproute2 \
+        less \
         libcapstone-dev \
         libssl-dev \
         make \
@@ -30,6 +32,7 @@ RUN apt-get update \
         ruby-full \
         socat \
         strace \
+        tree \
         sudo \
         unzip \
         vim \
@@ -59,6 +62,7 @@ RUN cp ~/.oh-my-zsh/themes/robbyrussell.zsh-theme ~/.oh-my-zsh/custom/themes/exp
     && sed -i 's|ZSH_THEME="robbyrussell"|ZSH_THEME="exploitron"|' ~/.zshrc
 RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 RUN sed -i 's|eval "$(atuin init zsh)"|eval "$(atuin init zsh --disable-up-arrow)"|' ~/.zshrc
+RUN cargo install bat
 
 # Pwn utilities
 RUN pip install --upgrade pip \
@@ -112,7 +116,7 @@ RUN cd /tmp \
     && npm run build
 
 # Radare2 MCP
-RUN r2pm -ci r2mcp
+RUN r2pm -U && r2pm -ci r2mcp
 
 RUN mkdir /home/user/chal
 WORKDIR /home/user/chal
