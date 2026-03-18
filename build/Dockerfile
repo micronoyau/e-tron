@@ -9,6 +9,7 @@ RUN apt-get update \
     build-essential \
     curl \
     file \
+    firefox-esr \
     gdb \
     gdb-multiarch \
     git \
