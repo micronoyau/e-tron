@@ -1,0 +1,3 @@
+[submodule "build/neovim-config"]
+	path = build/neovim-config
+	url = https://github.com/micronoyau/neovim-config.git
