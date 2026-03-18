@@ -5,40 +5,41 @@ ENV PATH="/home/user/.local/bin:${PATH}"
 # Basic stuff
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        autoconf \
-        build-essential \
-        curl \
-        file \
-        gdb \
-        gdb-multiarch \
-        git \
-        iproute2 \
-        less \
-        libcapstone-dev \
-        libssl-dev \
-        make \
-        netcat-openbsd \
-        neovim \
-        ninja-build \
-        npm \
-        pkg-config \
-        openjdk-21-jdk \
-        pkg-config \
-        qttools5-dev qttools5-dev-tools qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5svg5-dev \
-        python3 \
-        python3-dev \
-        python3-pip \
-        python3-venv \
-        ruby-full \
-        socat \
-        strace \
-        tree \
-        sudo \
-        unzip \
-        vim \
-        wget \
-        zip \
-        zsh
+    autoconf \
+    build-essential \
+    curl \
+    file \
+    gdb \
+    gdb-multiarch \
+    git \
+    iproute2 \
+    less \
+    libcapstone-dev \
+    libssl-dev \
+    make \
+    netcat-openbsd \
+    ninja-build \
+    npm \
+    pkg-config \
+    openjdk-21-jdk \
+    pkg-config \
+    qttools5-dev qttools5-dev-tools qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5svg5-dev \
+    python3 \
+    python3-dev \
+    python3-pip \
+    python3-venv \
+    ruby-full \
+    socat \
+    strace \
+    tree \
+    sudo \
+    unzip \
+    vim \
+    wget \
+    wl-clipboard \
+    xxd \
+    zip \
+    zsh
 
 # Add user
 RUN useradd -m -u 1000 user
@@ -62,15 +63,15 @@ RUN cp ~/.oh-my-zsh/themes/robbyrussell.zsh-theme ~/.oh-my-zsh/custom/themes/exp
     && sed -i 's|ZSH_THEME="robbyrussell"|ZSH_THEME="exploitron"|' ~/.zshrc
 RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 RUN sed -i 's|eval "$(atuin init zsh)"|eval "$(atuin init zsh --disable-up-arrow)"|' ~/.zshrc
-RUN cargo install bat
+RUN cargo install bat ripgrep
 
 # Pwn utilities
 RUN pip install --upgrade pip \
     && pip install \
-        angr \
-        pwntools \
-        ROPgadget \
-        ropper
+    angr \
+    pwntools \
+    ROPgadget \
+    ropper
 RUN cargo install ropr
 RUN gem install one_gadget
 
@@ -117,6 +118,16 @@ RUN cd /tmp \
 
 # Radare2 MCP
 RUN r2pm -U && r2pm -ci r2mcp
+
+# IDE
+ARG NEOVIM_TAG=0.11.6
+RUN cd /tmp \
+    && wget https://github.com/neovim/neovim/releases/download/v${NEOVIM_TAG}/nvim-linux-x86_64.tar.gz \
+    && tar xzvf nvim-linux-x86_64.tar.gz \
+    && rm nvim-linux-x86_64.tar.gz \
+    && sudo mv nvim-linux-x86_64 /opt \
+    && sudo ln -s /opt/nvim-linux-x86_64/bin/nvim /usr/bin/nvim
+ADD neovim-config /home/user/.config/nvim
 
 RUN mkdir /home/user/chal
 WORKDIR /home/user/chal
