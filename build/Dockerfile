@@ -129,6 +129,7 @@ RUN cd /tmp \
     && sudo mv nvim-linux-x86_64 /opt \
     && sudo ln -s /opt/nvim-linux-x86_64/bin/nvim /usr/bin/nvim
 ADD neovim-config /home/user/.config/nvim
+RUN sudo chown -R user:user /home/user/.config/nvim
 
 RUN mkdir /home/user/chal
 WORKDIR /home/user/chal
