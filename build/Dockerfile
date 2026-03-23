@@ -109,6 +109,9 @@ ENV PATH="/home/user/.opencode/bin:${PATH}"
 ADD opencode.json /home/user/.config/opencode/opencode.json
 RUN mkdir -p ~/.local/share/opencode
 
+# Claude
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
 # GDB MCP
 RUN cd /tmp \
     && git clone https://github.com/signal-slot/mcp-gdb.git \
