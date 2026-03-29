@@ -6,6 +6,7 @@ ENV PATH="/home/user/.local/bin:${PATH}"
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     autoconf \
+    bear \
     build-essential \
     curl \
     file \
@@ -14,6 +15,7 @@ RUN apt-get update \
     gdb-multiarch \
     git \
     iproute2 \
+    jq \
     less \
     libcapstone-dev \
     libssl-dev \
